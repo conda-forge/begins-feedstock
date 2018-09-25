@@ -1,33 +1,25 @@
-{%set name = "begins" %}
-{%set version = "0.9" %}
-{%set compress_type = "tar.gz" %}
-{%set hash_type = "sha256" %}
-{%set hash_val = "98864dc7593ce438074ed30e4c030dcb37e795376726d9150d557ed9d868ef55" %}
-{%set build_num = "0" %}
+{% set version = "0.9" %}
 
 package:
-  name: {{ name|lower }}
+  name: begins
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.{{ compress_type }}
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ compress_type }}
-  {{ hash_type }}: {{ hash_val }}
+  url: https://pypi.io/packages/source/b/begins/begins-{{ version }}.tar.gz
+  sha256: 98864dc7593ce438074ed30e4c030dcb37e795376726d9150d557ed9d868ef55
 
 build:
-  number: {{ build_num }}
-  script: python setup.py install --single-version-externally-managed --record=record.txt
+  number: 1
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
 
 requirements:
-  build:
-    - python
-    - setuptools
-
+  host:
+    - python >=3.5
+    - pip
   run:
-    - python
+    - python >=3.5
     - setuptools
-    - funcsigs  # [py<33]
-    - argparse  # [py<27]
 
 test:
   imports:
